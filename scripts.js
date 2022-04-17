@@ -81,6 +81,33 @@ function scrollAutomatico() {
     ultimaMensagem.scrollIntoView();
 }
 
+function adicionarNovaMensagem() {
+    const mensagemDigitada = document.querySelector(".digite-mensagem").value;
+    const novaMensagem = {
+        from: nomeUsuario,
+        to: "Todos",
+        text: mensagemDigitada,
+        type: "message"
+    };
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", novaMensagem);   
+    
+    promise.then(envioMensagens);
+    promise.catch(erroMensagem);
+}
+
+function envioMensagens() {
+    pegarMensagens();
+    document.querySelector(".digite-mensagem").value = "";
+}
+
+function erroMensagem(error) {
+    console.log(error.response);
+    if (error.response.status === 400) {
+      alert("Houve um erro ao enviar a mensagem. Por favor, entre novamente.");
+      window.location.reload();
+    }
+}
+
 setInterval(pegarMensagens, 3000);
 setInterval(continuarLogado, 4000);
 
