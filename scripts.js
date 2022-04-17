@@ -125,3 +125,12 @@ function deslogarUsuario(error) {
     alert("Você ficou muito tempo inativo. Por favor, entre novamente.");
     window.location.reload();
 }
+
+function envioEnter(tecla) {
+    if(tecla.key === 'Enter') {
+        let botao = document.querySelector("#submit");
+        botao.click();
+    }
+}
+
+document.addEventListener("keypress", envioEnter);
