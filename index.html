@@ -8,21 +8,42 @@
 
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="styles.css" />
+
+    <link rel="icon" href="/Imagens/icon_uol.png">
+
+
 </head>
 <body>
-    <div class="barra-topo">
-        <img src="/Imagens/logo_uol.jpg" alt="">
-        <ion-icon name="people"></ion-icon>
-    </div>
-
-    <div class="caixa-mensagens"></div>
-
-    <div class="barra-bottom">
-        <input type="text" class="digite-mensagem" placeholder="Escreva aqui...">
-        <button class="enviar-mensagem">
-            <ion-icon name="paper-plane-outline" id="submit" onclick="adicionarNovaMensagem()"></ion-icon>
+    
+    <div class="pagina-inicial">
+        <img src="/Imagens/logo_uol.jpg" alt="" />
+        <input
+        id="submit-entrar"
+          type="text"
+          class="digite-usuario"
+          placeholder="Digite seu nome"
+        />
+        <button id="button-entrar"
+        class="botao-entrar" onclick="perguntarUsuario()">
+          Entrar
         </button>
-        
+      </div>
+
+    <div class="conteiner esconder">
+        <div class="barra-topo">
+            <img src="/Imagens/logo_uol.jpg" alt="">
+            <ion-icon name="people"></ion-icon>
+        </div>
+
+        <div class="caixa-mensagens"></div>
+
+        <div class="barra-bottom">
+            <input id="submit" type="text" class="digite-mensagem" placeholder="Escreva aqui...">
+            <button class="enviar-mensagem">
+                <ion-icon id="button" name="paper-plane-outline" onclick="adicionarNovaMensagem()"></ion-icon>
+            </button>
+            
+        </div>
     </div>
        
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>

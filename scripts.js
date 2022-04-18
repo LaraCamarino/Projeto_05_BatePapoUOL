@@ -1,17 +1,29 @@
 let nomeUsuario;
 let mensagens = [];
 
-perguntarUsuario()
-
 function perguntarUsuario() {
-    nomeUsuario = prompt("Digite um nome de usuário.");
+    nomeUsuario = document.querySelector(".digite-usuario").value;
     let nome = {
        name: nomeUsuario
     }
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", nome);
+
+    if(nomeUsuario === "") {
+        alert("Digite um nome válido.")
+        return;
+    }
    
-    promise.then(pegarMensagens);
+    promise.then(entrarChat);
     promise.catch(erroEntrada);
+}
+
+function entrarChat() {
+    document.querySelector(".pagina-inicial").classList.add("esconder");
+    document.querySelector(".conteiner").classList.remove("esconder");
+    
+    setInterval(continuarLogado, 4000);
+
+    pegarMensagens();
 }
 
 function erroEntrada(error) {
@@ -89,10 +101,16 @@ function adicionarNovaMensagem() {
         text: mensagemDigitada,
         type: "message"
     };
-    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", novaMensagem);   
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", novaMensagem);
     
+    if(mensagemDigitada === "") {
+        alert("Digite alguma coisa.")
+        return;
+    }
+
     promise.then(envioMensagens);
     promise.catch(erroMensagem);
+
 }
 
 function envioMensagens() {
@@ -103,19 +121,19 @@ function envioMensagens() {
 function erroMensagem(error) {
     console.log(error.response);
     if (error.response.status === 400) {
-      alert("Houve um erro ao enviar a mensagem. Por favor, entre novamente.");
-      window.location.reload();
+        alert("Houve um erro ao enviar a mensagem. Por favor, entre novamente.");
+        window.location.reload();
     }
 }
 
 setInterval(pegarMensagens, 3000);
-setInterval(continuarLogado, 4000);
 
 function continuarLogado() {
     let nome = {
         name: nomeUsuario
      }
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", nome);
+    console.log("estou logado");
 
     promise.catch(deslogarUsuario);
 }
@@ -126,11 +144,22 @@ function deslogarUsuario(error) {
     window.location.reload();
 }
 
-function envioEnter(tecla) {
-    if(tecla.key === 'Enter') {
-        let botao = document.querySelector("#submit");
-        botao.click();
-    }
+let inputEntrar = document.getElementById("submit-entrar");
+inputEntrar.addEventListener("keyup", envioEntrar);
+
+function envioEntrar(event) {
+    if (event.key === 'Enter') {
+    event.preventDefault();
+    document.getElementById("button-entrar").click();
+  }
 }
 
-document.addEventListener("keypress", envioEnter);
+let inputMensagem = document.getElementById("submit");
+inputMensagem.addEventListener("keyup", envioEnter);
+
+function envioEnter(event) {
+    if (event.key === 'Enter') {
+    event.preventDefault();
+    document.getElementById("button").click();
+  }
+}
