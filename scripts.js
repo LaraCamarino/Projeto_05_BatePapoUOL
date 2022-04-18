@@ -13,16 +13,22 @@ function perguntarUsuario() {
         return;
     }
    
-    promise.then(entrarChat);
+    promise.then(telaCarregamento);
     promise.catch(erroEntrada);
 }
 
-function entrarChat() {
+function telaCarregamento() {
     document.querySelector(".pagina-inicial").classList.add("esconder");
+    document.querySelector(".tela-carregamento").classList.remove("esconder");
+
+    setInterval(continuarLogado, 4000);
+    setTimeout(entrarChat, 8000);
+}
+
+function entrarChat() {
+    document.querySelector(".tela-carregamento").classList.add("esconder");
     document.querySelector(".conteiner").classList.remove("esconder");
     
-    setInterval(continuarLogado, 4000);
-
     pegarMensagens();
 }
 
@@ -133,7 +139,7 @@ function continuarLogado() {
         name: nomeUsuario
      }
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", nome);
-    console.log("estou logado");
+    console.log("Usuário logado");
 
     promise.catch(deslogarUsuario);
 }
